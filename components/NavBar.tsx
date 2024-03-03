@@ -13,6 +13,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { MintButton } from "./MintButton";
 
 export const ConnectWalletButton = () => {
   const { sdk, connected, connecting, account } = useSDK();
@@ -81,6 +82,7 @@ export const NavBar = () => {
           <ConnectWalletButton />
         </MetaMaskProvider>
       </div>
+      <MintButton />
     </nav>
   );
 };
