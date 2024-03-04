@@ -29,11 +29,10 @@ describe("MintableNFT", () => {
       expect(await mintableNFT.ownerOf(1)).to.equal(recipient);
     });
 
-    it("should only allow the owner to mint tokens", async () => {
+    it("should allow any address to mint tokens", async () => {
       const recipient = signers[1].address;
-      await expect(
-        mintableNFT.connect(signers[1]).mint(recipient)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      await mintableNFT.connect(signers[1]).mint(recipient);
+      expect(await mintableNFT.ownerOf(1)).to.equal(recipient);
     });
 
     it("should allow the owner to mint multiple tokens", async () => {

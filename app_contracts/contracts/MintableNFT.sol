@@ -26,7 +26,7 @@ contract MintableNFT is ERC721Enumerable, Ownable, ReentrancyGuard {
         return _baseURIextended;
     }
 
-    function mint(address to) public onlyOwner {
+    function mint(address to) public {
         require(currentTokenId < maxSupply, "Max supply reached");
         _safeMint(to, ++currentTokenId);
     }
