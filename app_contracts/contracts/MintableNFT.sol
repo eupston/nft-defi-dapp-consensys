@@ -32,14 +32,30 @@ contract MintableNFT is ERC721Enumerable, Ownable, ReentrancyGuard {
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-    require(
-        _exists(tokenId),
-        "ERC721Metadata: URI query for nonexistent token"
-    );
+        require(
+            _exists(tokenId),
+            "ERC721Metadata: URI query for nonexistent token"
+        );
 
-    string memory baseURI = _baseURI();
-    return bytes(baseURI).length > 0
-        ? string(abi.encodePacked(baseURI, tokenId.toString()))
-        : "";
+        string memory baseURI = _baseURI();
+        return bytes(baseURI).length > 0
+            ? string(abi.encodePacked(baseURI, tokenId.toString()))
+            : "";
     }
+
+    function getTokensOfOwner(address owner) external view returns (uint256[] memory) {
+        uint256 tokenCount = balanceOf(owner);
+
+        if (tokenCount == 0) {
+            // Return an empty array
+            return new uint256[](0);
+        } else {
+            uint256[] memory result = new uint256[](tokenCount);
+            for (uint256 i = 0; i < tokenCount; i++) {
+                result[i] = tokenOfOwnerByIndex(owner, i);
+            }
+            return result;
+        }
+    }
+    
 }

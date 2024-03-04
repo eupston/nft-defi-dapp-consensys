@@ -43,5 +43,23 @@ describe("MintableNFT", () => {
       expect(await mintableNFT.ownerOf(1)).to.equal(recipient);
       expect(await mintableNFT.ownerOf(2)).to.equal(recipient);
     });
+
+    it("should return all tokens of an owner", async () => {
+      const owner = signers[0].address;
+
+      // Mint two tokens to the owner
+      await mintableNFT.mint(owner);
+      await mintableNFT.mint(owner);
+
+      // Get all tokens of the owner
+      const tokens = await mintableNFT.getTokensOfOwner(owner);
+
+      // Check the length of the tokens array
+      expect(tokens.length).to.equal(2);
+
+      // Check the IDs of the tokens
+      expect(tokens[0]).to.equal(1);
+      expect(tokens[1]).to.equal(2);
+    });
   });
 });

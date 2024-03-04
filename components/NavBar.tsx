@@ -73,21 +73,21 @@ export const NavBar = () => {
   };
 
   return (
-    <MetaMaskProvider debug={false} sdkOptions={sdkOptions}>
-      <nav className="flex items-center justify-between max-w-screen-xl px-6 mx-auto py-7 rounded-xl">
-        <Link href="/" className="flex gap-1 px-6">
-          <span className="hidden text-2xl font-bold sm:block">
-            <span className="text-gray-900">Template</span>
-          </span>
-        </Link>
-        <div className="flex gap-4 px-6">
+    <nav className="flex items-center justify-between max-w-screen-xl px-6 mx-auto py-7 rounded-xl">
+      <Link href="/" className="flex gap-1 px-6">
+        <span className="hidden text-2xl font-bold sm:block">
+          <span className="text-gray-900">NFT Loan Collaterizer</span>
+        </span>
+      </Link>
+      <div className="flex gap-4 px-6">
+        <MetaMaskProvider debug={false} sdkOptions={sdkOptions}>
           <ConnectWalletButton />
-        </div>
-        <MintButton />
-        <LoanNFTButton />
-        <RepayLoanButton />
-      </nav>
-    </MetaMaskProvider>
+        </MetaMaskProvider>
+      </div>
+      <MintButton />
+      <LoanNFTButton />
+      <RepayLoanButton />
+    </nav>
   );
 };
 

@@ -13,6 +13,9 @@ contract NFTCollateralLoan {
         uint256 loanAmount;
         bool isRepaid;
     }
+
+    // Array to store all token IDs
+    uint256[] public allTokenIds;
     mapping(uint256 => Loan) public loans;
 
     // The NFT used as collateral
@@ -46,6 +49,8 @@ contract NFTCollateralLoan {
 
         // Record the loan details
         loans[tokenId] = Loan(msg.sender, loanAmount, false);
+        // Add the token ID to the array
+        allTokenIds.push(tokenId);
 
         emit LoanTaken(msg.sender, tokenId, loanAmount);
     }
@@ -67,11 +72,39 @@ contract NFTCollateralLoan {
 
         emit LoanRepaid(msg.sender, tokenId);
     }
-        // Dummy function to get the value of an NFT (to be replaced with actual logic)
+    // Dummy function to get the value of an NFT (to be replaced with actual logic with mint price perhaps)
     function getNFTValue(uint256 tokenId) public pure returns (uint256) {
         // Placeholder for NFT appraisal logic
-        return 1 ether; // 1 ether as a placeholder value
+        return 0.01 ether;
     }
+    
+    function getLoansOfBorrower(address borrower) external view returns (Loan[] memory) {
+        // Temporary array to store the loans of the borrower
+        Loan[] memory borrowerLoans = new Loan[](allTokenIds.length);
+
+        // Counter for the number of loans
+        uint256 loanCount = 0;
+
+        // Iterate over all token IDs
+        for (uint256 i = 0; i < allTokenIds.length; i++) {
+            // If the borrower of the loan is the specified address, add the loan to the array
+            if (loans[allTokenIds[i]].borrower == borrower) {
+                borrowerLoans[loanCount] = loans[allTokenIds[i]];
+                loanCount++;
+            }
+        }
+
+        // Create a new array with the correct length
+        Loan[] memory result = new Loan[](loanCount);
+
+        // Copy the data to the new array
+        for (uint256 i = 0; i < loanCount; i++) {
+            result[i] = borrowerLoans[i];
+        }
+
+        return result;
+    }
+
     // Deposit Ether into the contract
     function deposit() external payable {
     }
