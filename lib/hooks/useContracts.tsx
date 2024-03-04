@@ -10,7 +10,7 @@ export const useContracts = () => {
   const [nftCollateralizer, setNftCollateralizer] =
     useState<ethers.Contract | null>(null);
   const [mintable, setMintable] = useState<ethers.Contract | null>(null);
-  const { sdk, connected } = useSDK();
+  const { sdk, connected, account, ready } = useSDK();
 
   useEffect(() => {
     if (connected && sdk && typeof window !== "undefined" && window.ethereum) {
@@ -37,7 +37,7 @@ export const useContracts = () => {
       setNftCollateralizer(nftCollateralizerContract);
       setMintable(mintableContract);
     }
-  }, [connected, sdk]);
+  }, [connected, sdk, account, ready]);
 
   return { provider, signer, nftCollateralizer, mintable };
 };

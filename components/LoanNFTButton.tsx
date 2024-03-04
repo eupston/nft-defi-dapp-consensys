@@ -3,7 +3,11 @@ import constants from "@/lib/constants";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 
-export const LoanNFTButton = () => {
+interface LoanNFTButtonProps {
+  tokenId: number;
+}
+
+export const LoanNFTButton: React.FC<LoanNFTButtonProps> = ({ tokenId }) => {
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
@@ -11,6 +15,8 @@ export const LoanNFTButton = () => {
     null
   );
   const [nftContract, setNftContract] = useState<ethers.Contract | null>(null);
+  const [isNFTApproved, setIsNFTApproved] = useState(false);
+
   useEffect(() => {
     if (typeof window !== "undefined" && window.ethereum) {
       const provider = new ethers.providers.Web3Provider(
@@ -38,16 +44,23 @@ export const LoanNFTButton = () => {
 
   const loanNFT = async () => {
     if (loanContract && signer && nftContract) {
-      const tokenId = 1;
       const loanAmount = ethers.utils.parseEther("0.001");
 
-      // Approve the loan contract to transfer the NFT
-      // await nftContract.approve(loanContract.address, tokenId);
-
-      const tx = await loanContract.takeLoan(tokenId, loanAmount);
-      await tx.wait();
+      if (!isNFTApproved) {
+        // Approve the loan contract to transfer the NFT
+        await nftContract.approve(loanContract.address, tokenId);
+        setIsNFTApproved(true);
+      } else {
+        // Take the loan
+        const tx = await loanContract.takeLoan(tokenId, loanAmount);
+        await tx.wait();
+      }
     }
   };
 
-  return <Button onClick={loanNFT}>Loan NFT</Button>;
+  return (
+    <Button onClick={loanNFT}>
+      {isNFTApproved ? "Loan NFT" : "Approve NFT"}
+    </Button>
+  );
 };

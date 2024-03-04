@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { BigNumber } from "ethers";
 import { useContracts } from "@/lib/hooks/useContracts";
+import { LoanNFTButton } from "./LoanNFTButton";
 
 interface NFT {
   id: BigNumber;
@@ -27,6 +27,23 @@ export const MyNFTs: React.FC = () => {
           setNfts(fetchedNfts);
         });
       });
+
+      // Listen for the Minted event
+      mintable.on("Transfer", async (from, to, tokenId) => {
+        const address = await signer.getAddress();
+        if (to === address) {
+          // If the current user is the receiver of the minted NFT, update the state
+          const newNFT = {
+            id: tokenId,
+            name: "My NFT",
+            image: "/placeholderNFT.jpg",
+          };
+          setNfts((prevNfts) => [...prevNfts, newNFT]);
+        }
+      });
+      return () => {
+        mintable.removeAllListeners("Transfer");
+      };
     }
   }, [signer, mintable]);
 
@@ -49,9 +66,7 @@ export const MyNFTs: React.FC = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400">
               ID: {nft.id.toString()}
             </p>
-            <Button className="mt-2" size="sm">
-              Loan NFT
-            </Button>
+            <LoanNFTButton tokenId={nft.id.toNumber()} />
           </div>
         </div>
       ))}

@@ -6,7 +6,7 @@ import WalletIcon from "../public/icons/WalletIcon";
 
 import { Button } from "./ui/button";
 
-import { useSDK, MetaMaskProvider } from "@metamask/sdk-react";
+import { useSDK } from "@metamask/sdk-react";
 import { formatAddress } from "../lib/utils";
 import {
   Popover,
@@ -14,8 +14,6 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { MintButton } from "./MintButton";
-import { LoanNFTButton } from "./LoanNFTButton";
-import { RepayLoanButton } from "./RepayLoanButton";
 
 export const ConnectWalletButton = () => {
   const { sdk, connected, connecting, account } = useSDK();
@@ -60,17 +58,7 @@ export const ConnectWalletButton = () => {
 };
 
 export const NavBar = () => {
-  const host =
-    typeof window !== "undefined" ? window.location.host : "defaultHost";
-
-  const sdkOptions = {
-    logging: { developerMode: false },
-    checkInstallationImmediately: false,
-    dappMetadata: {
-      name: "Next-Metamask-Boilerplate",
-      url: host, // using the host constant defined above
-    },
-  };
+  const { account } = useSDK();
 
   return (
     <nav className="flex items-center justify-between max-w-screen-xl px-6 mx-auto py-7 rounded-xl">
@@ -80,13 +68,9 @@ export const NavBar = () => {
         </span>
       </Link>
       <div className="flex gap-4 px-6">
-        <MetaMaskProvider debug={false} sdkOptions={sdkOptions}>
-          <ConnectWalletButton />
-        </MetaMaskProvider>
+        <ConnectWalletButton />
+        {account && <MintButton />}
       </div>
-      <MintButton />
-      <LoanNFTButton />
-      <RepayLoanButton />
     </nav>
   );
 };
