@@ -60,7 +60,7 @@ export const LoanNFTButton: React.FC<LoanNFTButtonProps> = ({ tokenId }) => {
 
   return (
     <Button onClick={loanNFT}>
-      {isNFTApproved ? "Loan NFT" : "Approve NFT"}
+      {isNFTApproved ? "Loan NFT" : "Approve NFT for Lending"}
     </Button>
   );
 };

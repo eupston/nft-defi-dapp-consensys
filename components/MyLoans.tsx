@@ -58,6 +58,9 @@ export default function MyLoans() {
             <div className="grid gap-1">
               <h3 className="font-semibold">Loan #{index + 1}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">
+                TokenId: {loan.tokenId.toString()}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Amount: {ethers.utils.formatEther(loan.loanAmount)} ETH
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">

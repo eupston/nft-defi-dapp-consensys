@@ -49,7 +49,7 @@ contract NFTCollateralLoan {
         payable(msg.sender).transfer(loanAmount);
 
         // Record the loan details
-        loans[tokenId] = Loan(msg.sender, loanAmount, false, tokenId);
+        loans[tokenId] = Loan(msg.sender, loanAmount, false, tokenId); 
         allTokenIds.push(tokenId);
 
         emit LoanTaken(msg.sender, tokenId, loanAmount);
