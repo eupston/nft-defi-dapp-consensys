@@ -3,7 +3,13 @@ import constants from "@/lib/constants";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 
-export const RepayLoanButton = () => {
+interface RepayLoanButtonProps {
+  tokenId: number;
+}
+
+export const RepayLoanButton: React.FC<RepayLoanButtonProps> = ({
+  tokenId,
+}) => {
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
@@ -32,7 +38,6 @@ export const RepayLoanButton = () => {
 
   const repayLoan = async () => {
     if (loanContract && signer) {
-      const tokenId = 1;
       const amountInWei = ethers.utils.parseEther("0.001");
       const tx = await loanContract.repayLoan(tokenId, {
         from: signer.getAddress(),

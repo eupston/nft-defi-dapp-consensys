@@ -54,6 +54,7 @@ describe("NFTCollateralLoan", () => {
       expect(loan.borrower).to.equal(signers[0].address);
       expect(loan.loanAmount).to.equal(loanAmount);
       expect(loan.isRepaid).to.equal(false);
+      expect(loan.tokenId).to.equal(tokenId);
     });
 
     it("should not allow a user to take a loan exceeding LTV", async () => {
@@ -79,6 +80,7 @@ describe("NFTCollateralLoan", () => {
         .repayLoan(tokenId, { value: loanAmount });
       const loan = await nftCollateralLoan.loans(tokenId);
       expect(loan.isRepaid).to.equal(true);
+      expect(loan.tokenId).to.equal(tokenId);
     });
 
     it("should not allow a user to repay a loan that is already repaid", async () => {
@@ -130,10 +132,12 @@ describe("NFTCollateralLoan", () => {
     expect(loans[0].borrower).to.equal(signers[0].address);
     expect(loans[0].loanAmount).to.equal(loanAmount);
     expect(loans[0].isRepaid).to.equal(false);
+    expect(loans[0].tokenId).to.equal(tokenId1);
 
     // Check the details of the second loan
     expect(loans[1].borrower).to.equal(signers[0].address);
     expect(loans[1].loanAmount).to.equal(loanAmount);
     expect(loans[1].isRepaid).to.equal(false);
+    expect(loans[1].tokenId).to.equal(tokenId2);
   });
 });
