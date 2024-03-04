@@ -34,7 +34,6 @@ export const useContracts = () => {
           constants.NFT_ABI.abi,
           signer
         );
-
         setProvider(provider);
         setSigner(signer);
         setNftCollateralizer(nftCollateralizerContract);

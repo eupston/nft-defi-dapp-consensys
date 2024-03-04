@@ -14,10 +14,10 @@ export const LoanNFTButton: React.FC<LoanNFTButtonProps> = ({ tokenId }) => {
   const loanNFT = async () => {
     if (nftCollateralizer && signer && mintable) {
       const loanAmount = parseEther("0.001");
-
       if (!isNFTApproved) {
+        const address = await nftCollateralizer.getAddress();
         // Approve the loan contract to transfer the NFT
-        await mintable.approve(nftCollateralizer.address, tokenId);
+        await mintable.approve(address, tokenId);
         setIsNFTApproved(true);
       } else {
         // Take the loan

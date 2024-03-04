@@ -1,5 +1,5 @@
-import MINTABLE_NFT_ABI from "../app_contracts/artifacts/contracts/MintableNFT.sol/MintableNFT.json";
-import NFTCOLLATERALLOAN_ABI from "../app_contracts/artifacts/contracts/NFTCollateralLoan.sol/NFTCollateralLoan.json";
+import MINTABLE_NFT_ABI from "./abi/MintableNFT.json";
+import NFTCOLLATERALLOAN_ABI from "./abi/NFTCollateralLoan.json";
 
 export default {
   goreli: {
