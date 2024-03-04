@@ -3,7 +3,15 @@ import { ethers } from "hardhat";
 async function main() {
   const factory = await ethers.getContractFactory("NFTCollateralLoan");
 
-  let contract = await factory.deploy(process.env.GOERLI_ADDRESS_MINTABLENFT);
+  // Send Ether during deployment to fund contract
+  const deploymentOptions = {
+    value: ethers.utils.parseEther("0.1"),
+  };
+
+  let contract = await factory.deploy(
+    process.env.GOERLI_ADDRESS_MINTABLENFT,
+    deploymentOptions
+  );
 
   console.log(
     `The address the Contract WILL have once mined: ${contract.address}`

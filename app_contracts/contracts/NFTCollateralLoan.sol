@@ -25,7 +25,7 @@ contract NFTCollateralLoan {
     event LoanTaken(address borrower, uint256 tokenId, uint256 loanAmount);
     event LoanRepaid(address borrower, uint256 tokenId);
 
-    constructor(address _collateralNFT) {
+    constructor(address _collateralNFT) payable {
         collateralNFT = IERC721(_collateralNFT);
     }
 
