@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSDK } from "@metamask/sdk-react";
-import { BigNumber, ethers } from "ethers";
+import { ethers, BigNumberish, formatEther } from "ethers";
+
 import { useContracts } from "@/lib/hooks/useContracts";
 import { RepayLoanButton } from "./RepayLoanButton";
 
 interface Loan {
   borrower: string;
-  loanAmount: BigNumber;
+  loanAmount: BigNumberish;
   isRepaid: boolean;
   tokenId: number;
 }
@@ -61,7 +62,7 @@ export default function MyLoans() {
                 TokenId: {loan.tokenId.toString()}
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Amount: {ethers.utils.formatEther(loan.loanAmount)} ETH
+                Amount: {formatEther(loan.loanAmount)} ETH
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Status: {loan.isRepaid ? "Fully Repaid" : "In Repayment"}

@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { BigNumber } from "ethers";
+import { BigNumberish } from "ethers";
 import { useContracts } from "@/lib/hooks/useContracts";
 import { LoanNFTButton } from "./LoanNFTButton";
 
 interface NFT {
-  id: BigNumber;
+  id: BigNumberish;
   name: string;
   image: string;
 }
@@ -18,7 +18,7 @@ export const MyNFTs: React.FC = () => {
   useEffect(() => {
     if (signer && mintable) {
       signer.getAddress().then((address) => {
-        mintable.getTokensOfOwner(address).then((tokenIds: BigNumber[]) => {
+        mintable.getTokensOfOwner(address).then((tokenIds: BigNumberish[]) => {
           const fetchedNfts = tokenIds.map((id) => ({
             id,
             name: "My NFT",
@@ -66,7 +66,7 @@ export const MyNFTs: React.FC = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400">
               ID: {nft.id.toString()}
             </p>
-            <LoanNFTButton tokenId={nft.id.toNumber()} />
+            <LoanNFTButton tokenId={parseInt(nft.id.toString())} />
           </div>
         </div>
       ))}

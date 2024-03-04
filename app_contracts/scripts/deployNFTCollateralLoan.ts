@@ -8,11 +8,14 @@ async function main() {
     value: ethers.utils.parseEther("0.1"),
   };
 
-  let contract = await factory.deploy(
-    process.env.GOERLI_ADDRESS_MINTABLENFT,
-    deploymentOptions
-  );
+  let goerliAddress = process.env.GOERLI_ADDRESS_MINTABLENFT;
+  if (!goerliAddress) {
+    throw new Error(
+      "The environment variable GOERLI_ADDRESS_MINTABLENFT is not defined"
+    );
+  }
 
+  let contract = await factory.deploy(goerliAddress, deploymentOptions);
   console.log(
     `The address the Contract WILL have once mined: ${contract.address}`
   );
