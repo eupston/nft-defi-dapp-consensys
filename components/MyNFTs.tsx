@@ -13,10 +13,10 @@ interface NFT {
 
 export const MyNFTs: React.FC = () => {
   const [nfts, setNfts] = useState<NFT[]>([]);
-  const { signer, mintable } = useContracts();
+  const { signer, mintable, nftCollateralizer } = useContracts();
 
   useEffect(() => {
-    if (signer && mintable) {
+    if (signer && mintable && nftCollateralizer) {
       signer.getAddress().then((address) => {
         mintable.getTokensOfOwner(address).then((tokenIds: BigNumberish[]) => {
           const fetchedNfts = tokenIds.map((id) => ({
@@ -41,8 +41,21 @@ export const MyNFTs: React.FC = () => {
           setNfts((prevNfts) => [...prevNfts, newNFT]);
         }
       });
+
+      // Listen for the LoanTaken event
+      nftCollateralizer.on(
+        "LoanTaken",
+        async (borrower, tokenId, loanAmount) => {
+          const address = await signer.getAddress();
+          if (borrower === address) {
+            // If the current user is the borrower, remove the NFT from the state
+            setNfts((prevNfts) => prevNfts.filter((nft) => nft.id !== tokenId));
+          }
+        }
+      );
       return () => {
         mintable.removeAllListeners("Transfer");
+        nftCollateralizer.removeAllListeners("LoanTaken");
       };
     }
   }, [signer, mintable]);

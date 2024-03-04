@@ -26,6 +26,12 @@ export default function MyLoans() {
 
       fetchLoans();
 
+      // Listen for LoanTaken event
+      const onLoanTaken = (borrower: any) => {
+        if (borrower.toLowerCase() === account.toLowerCase()) {
+          fetchLoans();
+        }
+      };
       // Listen for LoanRepaid event
       const onLoanRepaid = (borrower: any) => {
         if (borrower.toLowerCase() === account.toLowerCase()) {
@@ -33,9 +39,10 @@ export default function MyLoans() {
         }
       };
 
+      nftCollateralizer.on("LoanTaken", onLoanTaken);
       nftCollateralizer.on("LoanRepaid", onLoanRepaid);
-
       return () => {
+        nftCollateralizer.off("LoanTaken", onLoanTaken);
         nftCollateralizer.off("LoanRepaid", onLoanRepaid);
       };
     }
