@@ -2,17 +2,25 @@
 
 import { Button } from "./ui/button";
 import { useContracts } from "@/lib/hooks/useContracts";
+import { useAccount, useWriteContract } from "wagmi";
+import constants from "@/lib/constants";
 
 export const MintButton = () => {
-  const { signer, mintable } = useContracts();
+  const { data: hash, writeContract } = useWriteContract();
+  const account = useAccount();
 
-  const mintNFT = async () => {
-    if (mintable && signer) {
-      const address = await signer.getAddress();
-      const tx = await mintable.mint(address);
-      await tx.wait();
-    }
-  };
-
-  return <Button onClick={mintNFT}>Mint NFT</Button>;
+  return (
+    <Button
+      onClick={() => {
+        writeContract({
+          address: constants.sepolia.MINTABLENFT as `0x${string}`,
+          abi: constants.NFT_ABI.abi,
+          functionName: "mint",
+          args: [account.address],
+        });
+      }}
+    >
+      Mint NFT
+    </Button>
+  );
 };
