@@ -14,6 +14,10 @@ const GOERLI_PRIVATE_KEY =
   process.env.GOERLI_PRIVATE_KEY! ||
   "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3";
 
+const SEPOLIA_PRIVATE_KEY =
+  process.env.SEPOLIA_PRIVATE_KEY! ||
+  "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3";
+
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 
 const config: HardhatUserConfig = {
@@ -24,6 +28,10 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {},
     localhost: {},
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: [SEPOLIA_PRIVATE_KEY],
+    },
     goerli: {
       url: `https://goerli.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [GOERLI_PRIVATE_KEY],

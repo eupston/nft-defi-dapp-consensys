@@ -18,8 +18,6 @@ const sdkOptions = {
 };
 
 export default function Home() {
-  const { account } = useSDK();
-
   return (
     <MetaMaskProvider debug={false} sdkOptions={sdkOptions}>
       <NavBar />

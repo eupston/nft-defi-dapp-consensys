@@ -24,13 +24,13 @@ export const useContracts = () => {
 
         // Hardcode the contracts
         const nftCollateralizerContract = new ethers.Contract(
-          constants.goreli.NFTCOLLATERALLOAN,
+          constants.sepolia.NFTCOLLATERALLOAN,
           constants.LOAN_ABI.abi,
           signer
         );
 
         const mintableContract = new ethers.Contract(
-          constants.goreli.MINTABLENFT,
+          constants.sepolia.MINTABLENFT,
           constants.NFT_ABI.abi,
           signer
         );

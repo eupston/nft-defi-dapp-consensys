@@ -5,13 +5,13 @@ async function main() {
 
   // Send Ether during deployment to fund contract
   const deploymentOptions = {
-    value: ethers.utils.parseEther("0.1"),
+    value: ethers.utils.parseEther("0.05"),
   };
 
-  let goerliAddress = process.env.GOERLI_ADDRESS_MINTABLENFT;
+  let goerliAddress = process.env.SEPOLIA_ADDRESS_MINTABLENFT;
   if (!goerliAddress) {
     throw new Error(
-      "The environment variable GOERLI_ADDRESS_MINTABLENFT is not defined"
+      "The environment variable SEPOLIA_ADDRESS_MINTABLENFT is not defined"
     );
   }
 

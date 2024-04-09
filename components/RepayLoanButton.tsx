@@ -11,7 +11,7 @@ export const RepayLoanButton: React.FC<RepayLoanButtonProps> = ({
   tokenId,
 }) => {
   const { nftCollateralizer } = useContracts();
-  const [isLoading, setIsLoading] = useState(false); // New loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const repayLoan = async () => {
     if (nftCollateralizer) {
